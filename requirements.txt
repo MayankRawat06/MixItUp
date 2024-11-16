@@ -3,3 +3,4 @@ pytube==15.0.0
 streamlit==1.18.1
 youtube_search==2.1.2
 ffmpeg-python
+altair==4.2.2
