@@ -5,12 +5,17 @@ import re
 import time
 import zipfile
 import urllib.error
+import logging
+from logging import getLogger
 from send_mail import send_mail
 os.environ["IMAGEIO_FFMPEG_EXE"] = "ffmpeg"
 from youtube_search import YoutubeSearch
 from pytube import YouTube, Search, exceptions
 from moviepy.editor import VideoFileClip, concatenate_audioclips
 import streamlit as st
+app_logger = getLogger()
+app_logger.addHandler(logging.StreamHandler())
+app_logger.setLevel(logging.INFO)
 
 def download_video(singer, n): 
     count = 0
@@ -38,6 +43,7 @@ def convert_video_to_audio(output_ext="mp3"):
     for filename in os.listdir(directory):
         if filename.endswith(".mp4"):
             file_path = os.path.join(directory, filename)
+            app_logger.info("filepath : " + file_path)
             clip = VideoFileClip(file_path)
             audioclip=clip.audio
             basePath, extension = os.path.splitext(filename)
